@@ -1,10 +1,9 @@
-// src/common/utils/interaction-error-handler.ts
+import { Logger } from '@nestjs/common';
 import {
   CacheType,
   ChatInputCommandInteraction,
   MessageFlags,
 } from 'discord.js';
-import { Logger } from '@nestjs/common';
 
 export async function handleInteractionError(
   interaction: ChatInputCommandInteraction<CacheType>,
@@ -17,7 +16,6 @@ export async function handleInteractionError(
   logger.error(
     `Error occurred while handling interaction: ${interaction.commandName} - ${interaction.user?.tag} (${interaction.user?.id}) - ${interaction.guild?.name} (${interaction.guild?.id})`,
     error.message || 'An unexpected error occurred',
-    // error.stack || 'No stack trace available',
   );
 
   if (!interaction.replied && !interaction.deferred) {
