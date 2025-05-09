@@ -20,5 +20,13 @@ async function bootstrap() {
 
   logger.log(`Application is running on: ${await app.getUrl()}`);
   logger.debug(`Swagger is running on: ${await app.getUrl()}/api`);
+
+  process.on('unhandledRejection', (reason, promise) => {
+    logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  });
+
+  process.on('uncaughtException', (err) => {
+    logger.error('Uncaught Exception:', err);
+  });
 }
 bootstrap();
