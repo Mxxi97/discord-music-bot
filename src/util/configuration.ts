@@ -29,13 +29,15 @@ export class Configuration {
 
   @IsDefined()
   DISCORD_BOT_TOKEN: string;
-
   @IsDefined()
   DISCORD_CLIENT_ID: string;
   @IsDefined()
   DISCORD_CLIENT_SECRET: string;
   @IsDefined()
   DISCORD_CALLBACK_URL: string;
+
+  @IsOptional()
+  DISCORD_DEV_GUILD_ID: string;
 
   @IsDefined()
   LAVALINK_AUTHORIZATION: string;
