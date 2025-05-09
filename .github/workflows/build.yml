@@ -2,11 +2,12 @@ name: Build NestJS (Fast)
 
 on:
   push:
-    branches: [master, main, dev]
+    branches: []
     paths:
       - 'src/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
+
   pull_request:
     branches: [master, main, dev]
     paths:
