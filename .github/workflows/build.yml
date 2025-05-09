@@ -2,13 +2,13 @@ name: Build NestJS (Fast)
 
 on:
   push:
-    branches: [main, master]
+    branches: [master, main, dev]
     paths:
       - 'src/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
   pull_request:
-    branches: [main, master]
+    branches: [master, main, dev]
     paths:
       - 'src/**'
       - 'package.json'
@@ -26,14 +26,14 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
+      - run: npm install -g pnpm
+
       - uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
-
-      - run: npm install -g pnpm
 
       - run: pnpm install --frozen-lockfile --prefer-offline
 
