@@ -51,7 +51,7 @@ export function getOrCreatePlayer(
   const guild = getGuildOrReply(interaction);
 
   const existingPlayer = playerManager.get(guild.id);
-  if (!existingPlayer!) {
+  if (!existingPlayer) {
     const player = playerManager.create({
       ...lavalinkService.extractInfoForPlayer(interaction),
       selfDeaf: true,
