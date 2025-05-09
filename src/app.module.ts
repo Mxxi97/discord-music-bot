@@ -1,11 +1,9 @@
 import { IntentsBitField } from 'discord.js';
 import { NecordModule as NecordModuleProvider } from 'necord';
-import { join } from 'path';
 
 import { NecordLavalinkModule } from '@necord/lavalink';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { LavalinkModule } from './lavalink/lavalink.module';
 import { NecordModule } from './necord/necord.module';
@@ -13,10 +11,6 @@ import { Configuration, configValidation } from './util/configuration';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/',
-    }),
     ConfigModule.forRoot({
       isGlobal: true,
       validate: configValidation,
