@@ -26,15 +26,20 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
-      - run: npm install -g pnpm
+      - name: Install pnpm
+        run: corepack enable
 
-      - uses: actions/cache@v4
+      # This caching is optional with setup-node@v4 and `cache: pnpm`, but can improve performance further.
+      - name: Cache pnpm store
+        uses: actions/cache@v4
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: ~/.local/share/pnpm/store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-
+            ${{ runner.os }}-pnpm-store-
 
-      - run: pnpm install --frozen-lockfile --prefer-offline
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
 
-      - run: pnpm build
+      - name: Build
+        run: pnpm build
