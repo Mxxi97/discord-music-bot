@@ -6,11 +6,9 @@ import { NecordLavalinkService, PlayerManager } from '@necord/lavalink';
 import { Injectable, Logger } from '@nestjs/common';
 
 import { AddQueryQueryDto, PlayQueryDto } from './dtos/query.dto';
-import {
-  InjectOrCreatePlayer,
-  registerPlayerContext,
-} from './player.decorator';
+import { InjectOrCreatePlayer } from './player.decorator';
 import { handleInteractionError } from './util/handle-interaction-error';
+import { registerPlayerContext } from './util/interaction-context-utils';
 import { setupPlayInteractionCollector } from './util/play-interaction-collector';
 import { createPlayerControlsRow } from './util/player-controls-row';
 

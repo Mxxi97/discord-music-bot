@@ -4,6 +4,19 @@ import {
   MessageFlags,
 } from 'discord.js';
 
+import { NecordLavalinkService, PlayerManager } from '@necord/lavalink';
+
+let playerManager: PlayerManager;
+let lavalinkService: NecordLavalinkService;
+
+export function registerPlayerContext(
+  manager: PlayerManager,
+  service: NecordLavalinkService,
+) {
+  playerManager = manager;
+  lavalinkService = service;
+}
+
 export function getGuildOrReply(
   interaction: ChatInputCommandInteraction<CacheType>,
 ) {
@@ -35,12 +48,12 @@ export function getMemberOrReply(
 export function getOrCreatePlayer(
   interaction: ChatInputCommandInteraction<CacheType>,
 ) {
-  const guild = this.getGuildOrReply(interaction);
+  const guild = getGuildOrReply(interaction);
 
-  const existingPlayer = this.playerManager.get(guild.id);
+  const existingPlayer = playerManager.get(guild.id);
   if (!existingPlayer!) {
-    const player = this.playerManager.create({
-      ...this.lavalinkService.extractInfoForPlayer(interaction),
+    const player = playerManager.create({
+      ...lavalinkService.extractInfoForPlayer(interaction),
       selfDeaf: true,
       selfMute: false,
       volume: 75,
@@ -54,9 +67,9 @@ export function getOrCreatePlayer(
 export function getPlayerOrReply(
   interaction: ChatInputCommandInteraction<CacheType>,
 ) {
-  const guild = this.getGuildOrReply(interaction);
+  const guild = getGuildOrReply(interaction);
 
-  const player = this.playerManager.get(guild.id);
+  const player = playerManager.get(guild.id);
   if (!player) {
     interaction.reply({
       content: 'There is no player for this guild.',

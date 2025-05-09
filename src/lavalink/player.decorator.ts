@@ -1,19 +1,8 @@
-// src/common/decorators/inject-or-create-player.decorator.ts
-import { NecordLavalinkService, PlayerManager } from '@necord/lavalink';
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { NecordExecutionContext, SlashCommandContext } from 'necord';
+
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+
 import { getOrCreatePlayer } from './util/interaction-context-utils';
-
-let playerManager: PlayerManager;
-let lavalinkService: NecordLavalinkService;
-
-export function registerPlayerContext(
-  manager: PlayerManager,
-  service: NecordLavalinkService,
-) {
-  playerManager = manager;
-  lavalinkService = service;
-}
 
 /**
  * Injects or creates a Lavalink player for the given interaction.
@@ -28,6 +17,6 @@ export const InjectOrCreatePlayer = createParamDecorator(
     const necordCtx = NecordExecutionContext.create(ctx);
     const [interaction] = necordCtx.getContext<SlashCommandContext>();
 
-    return await getOrCreatePlayer(interaction);
+    return getOrCreatePlayer(interaction);
   },
 );
